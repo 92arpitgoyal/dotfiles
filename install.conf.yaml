@@ -1,0 +1,69 @@
+- defaults:
+    link:
+      create: true
+      glob: true
+      relink: true
+
+- clean: [
+  '~',
+  '~/Library/Application Support/Code - Insiders/User'
+]
+
+- shell:
+  - git submodule update --init --recursive
+  - curl -Ls http://git.io/n-install | N_PREFIX=${HOME}/.n bash -s -- -y latest
+  - mkdir -p ${HOME}/Projects ${HOME}/Forks ${HOME}/.npm-packages
+
+- tap:
+  - homebrew/cask-versions
+
+- brew: [
+  bash,
+  coreutils,
+  findutils,
+  moreutils,
+  wget --with-iri,
+  zsh,
+  zsh-autosuggestions,
+  zsh-completions,
+  zsh-history-substring-search,
+  zsh-syntax-highlighting
+]
+
+- cask: [
+  1password,
+  google-chrome-beta,
+  graphiql,
+  iterm2,
+  slack,
+  spectacle,
+  spotify,
+  telegram,
+  visual-studio-code-insiders
+]
+
+- link:
+    ~/.aliases: shell/aliases
+    ~/.curlrc: shell/curlrc
+    ~/.exports: shell/exports
+    ~/.functions: shell/functions
+    ~/.gitattributes: git/gitattributes
+    ~/.gitconfig: git/gitconfig
+    ~/.gitignore: git/gitignore
+    ~/.inputrc: shell/inputrc
+    ~/.screenrc: shell/screenrc
+    ~/.wgetrc: shell/wgetrc
+    ~/.zshrc: shell/zshrc
+    ~/bin: bin
+    ~/Library/Application Support/Code - Insiders/User:
+      force: true
+      path: code/*
+
+- shell:
+  - sh -c "$(curl -fsSL https:/ /raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  - sudo sh -c "echo $(which zsh) >> /etc/shells"
+  - chsh -s $(which zsh)
+  - npm config set prefix ${HOME}/.npm-packages
+  - npm install --global npm pure-prompt
+  - curl -fsSL https://raw.githubusercontent.com/sindresorhus/iterm2-snazzy/master/Snazzy.itermcolors > ${HOME}/Downloads/Snazzy.itermcolors
+  - open ${HOME}/Downloads/Snazzy.itermcolors

@@ -1,0 +1,52 @@
+# Editor
+export EDITOR="code-insiders --wait"
+
+# Path to n
+export N_PREFIX="${HOME}/.n"
+
+# Path to npm packages
+export NPM_PACKAGES="${HOME}/.npm-packages"
+
+# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
+unset MANPATH
+
+# Add `~/.npm-packages/share/man` to the `$MANPATH`
+export MANPATH="${NPM_PACKAGES}/share/man:$(manpath)"
+
+# Prefer US English and use UTF-8
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+
+# Highlight section titles in manual pages
+export LESS_TERMCAP_md="${yellow}"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=${HISTSIZE}
+export HISTCONTROL=ignoredups
+
+# Make some commands not show up in history
+export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+
+# Make new shells get the history lines from all previous shells instead of the default "last window closed" history
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Prepend paths
+declare -a DIRS=(
+	"${HOME}/Library/Python/2.7/bin"
+	"/usr/local/bin"
+	"/usr/local/sbin"
+	"${N_PREFIX}/bin"
+	"${NPM_PACKAGES}/bin"
+	"${HOME}/bin"
+)
+
+for x in "${DIRS[@]}"; do
+	[[ -d "$x" ]] && PATH="${x}:${PATH}"
+done
+
+unset DIRS
+export PATH

@@ -1,0 +1,36 @@
+# Create a new directory and enter it
+function mkd() {
+	take "$@";
+}
+
+# Syntax-highlight JSON strings or files
+function json() {
+	if [ -t 0 ]; then
+		python -mjson.tool <<< "$*" | pygmentize -l javascript;
+	else
+		python -mjson.tool | pygmentize -l javascript;
+	fi;
+}
+
+# `c` with no arguments opens the current directory in VSCode, otherwise opens the given location
+function c() {
+	if [ $# -eq 0 ]; then
+		code-insiders .;
+	else
+		code-insiders "$@";
+	fi;
+}
+
+# `o` with no arguments opens the current directory, otherwise opens the given location
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+
+# Calculate something
+function calc() {
+	echo "$*" | bc
+}

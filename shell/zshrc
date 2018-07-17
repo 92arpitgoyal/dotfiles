@@ -1,0 +1,63 @@
+load_files() {
+	declare -a FILES=(
+		${HOME}/.exports
+		${HOME}/.aliases
+		${HOME}/.functions
+		${HOME}/.extra
+		/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+		/usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+		/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+	)
+
+	for x in "${FILES[@]}"; do
+		[[ -f "$x" ]] && source "$x"
+	done
+}
+
+# Load plugins
+plugins=(
+	common-aliases
+	dirhistory
+	git
+	gitfast
+	npm
+	osx
+)
+
+# Load zsh-completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# Set CDPATH
+typeset -gU cdpath
+cdpath=(
+	$cdpath
+	~/Projects
+	~/Forks
+)
+
+# Path to oh-my-zsh
+export ZSH="${HOME}/.oh-my-zsh"
+
+# Disable oh-my-zsh themes
+ZSH_THEME=""
+
+# Load oh-my-zsh
+source "${ZSH}/oh-my-zsh.sh"
+
+# Load Pure
+autoload -U promptinit; promptinit
+prompt pure
+
+# Source other files
+load_files
+
+# Append history as commands are executed
+setopt inc_append_history
+
+# Don't save duplicates
+setopt hist_ignore_all_dups
+
+# Treat #, ~, and ^ as part of patterns for filename generation
+setopt extended_glob
+
+unset load_files

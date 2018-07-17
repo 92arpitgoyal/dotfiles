@@ -1,0 +1,17 @@
+*~
+*.diff
+*.err
+*.log
+*.orig
+*.pyc
+*.rej
+*.sass-cache
+*.sw?
+*.vi
+._*
+.code
+.DS_Store
+.Spotlight-V100
+.Trashes
+Desktop.ini
+Thumbs.db

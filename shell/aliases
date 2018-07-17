@@ -1,0 +1,53 @@
+# Easier navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~"
+alias -- -="cd -"
+
+# Git
+alias g="git"
+alias gb="git branch"
+alias gbr="git br"
+alias gc="git c"
+alias gca="git ca"
+alias gd="git d"
+alias gdi="git di"
+alias gl="git l"
+alias gls="git ls"
+alias go="git go"
+alias gp="git p"
+alias gpo="git po"
+alias gr="git gr"
+alias gra="git gra"
+alias gs="git s"
+
+# Paths
+alias p="cd ~/Projects"
+alias pf="cd ~/Forks"
+
+# Enable aliases to be sudo'ed
+alias sudo="sudo "
+
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then
+	colorflag="--color"
+else
+	colorflag="-G"
+fi
+
+# Enable colorized output
+alias ls='ls ${colorflag}'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# List all files colorized in long format
+alias l="ls -lAhF"
+
+# Get week number
+alias week='date +%V'
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
